@@ -7,10 +7,14 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
-    name: 'Home',
+    path: '/Game',
+    name: 'Game',
     component: Home
   },
+  {
+    path: '**',
+    redirect: '/Game',
+  }
 ]
 
 const router = new VueRouter({
