@@ -33,7 +33,7 @@ export default Vue.extend({
             default: 'basic'
         }
     },
-    data() {
+    data(): {img: object} {
         return {
             img: {
                     iconClose: require('@/assets/images/icon-close.svg'),
@@ -91,6 +91,10 @@ export default Vue.extend({
   }
   .modal-body {
     margin: 20px 0 0 0;
+    padding: 1em;
+  }
+  .modal-body img{
+    width: 100%;
   }
   @media screen and (max-width: 675px) {
     .modal-container {
@@ -106,7 +110,7 @@ export default Vue.extend({
         text-align: center;
     }
     .modal-header{
-        margin: 10em 0 5em 0;
+        margin: 7em 0 5em 0;
     }
     .modal-body{
         margin: auto;
@@ -117,6 +121,14 @@ export default Vue.extend({
         top: 85%;
         right: 45%;
         width: 20px;
+    }
+  }
+  @media screen and (max-width: 320px) {
+    .modal-header{
+        margin: 3em 0 5em 0;
+    }
+    .btn-close{
+        right: 43%;
     }
   }
 </style>

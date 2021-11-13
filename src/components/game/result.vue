@@ -33,10 +33,10 @@
                 <h2>{{labelResult}}</h2>
                 <button class="btn-restart" @click="restart">play again</button>
             </div>
-            <article :class="['result-item housePicked ', houseWin ? 'bg-spinner': '']">
+            <article :class="['result-item ', houseWin ? 'bg-spinner': '']">
                 <h3>THE HOUSE PICKED</h3>
-                <div v-if="housePicked == ''" class="option-box d-flex">
-                    <div> <img :src="options.sppiner" width="120" alt=""></div>
+                <div v-if="housePicked == ''" class="spinner-house option-box d-flex">
+                    <div><img :src="options.sppiner" alt=""></div>
                 </div>
                 <figure v-if="housePicked == 'paper'" class="option-box d-flex paper">
                 <div>
@@ -83,7 +83,7 @@ export default Vue.extend({
         choice: String,
         actualRecord: Number,
     },
-    data() {
+    data(): {show_btn: boolean, labelResult: string, isMobile: boolean, userWin: boolean, houseWin: boolean, housePicked: string, countResult: number, options: object} {
         return {
             show_btn: false,
             labelResult: '',
@@ -201,11 +201,6 @@ export default Vue.extend({
 })
 </script>
 <style scoped>
-.mobile-score{
-    width: 50%;
-    margin: auto;
-    text-align: center;
-}
 .result-box {
     display: flex;
     justify-content: space-between;
@@ -234,13 +229,14 @@ export default Vue.extend({
     margin: 0;
     padding: 0;
     display: block;
+    text-align: center;
 }
 .hide-btn{
     display:none
 }
 .btn-restart{
     width: 100%;
-    height: 2rem;
+    height: 3rem;
     border: none;
     background: #fff;
     color:hsl(230, 64%, 43%);
@@ -252,17 +248,42 @@ export default Vue.extend({
     z-index: 2;
 }
 .bg-spinner{
-    background: url('../../assets/images/sppiner-win.svg') no-repeat center;
-    background-position: .8em 3.1em;
+    background: url('../../assets/images/sppiner-win.svg') no-repeat center center;
+    background-position-y: 3em;
+}
+.spinner-house img{
+    width: 150px;
+}
+.mobile-score{
+    width: 60%;
+    margin: auto;
+    text-align: center;
+}
+.mobile-score h2{
+    font-size: 2.2em;
+    /* margin: .1em 0; */
 }
 @media (max-width: 768px) {
+    .bg-spinner{
+    background: url('../../assets/images/sppiner-win.svg') no-repeat top center;
+    background-position-y: -.7em;
+}
     .result-item{
         flex-direction: column-reverse;
         width: 50%;
     }
-    .bg-spinner{
+    .spinner-house img{
+        width: 120px;
+    }
+}
+@media (max-width: 375px) {
+    .mobile-score{
         width: 50%;
-        background-position: 0 -0.6em;
+        margin: auto;
+        margin-top: -2em;
+    }
+    .mobile-score h2{
+        font-size: 1.5em;
     }
 }
 </style>

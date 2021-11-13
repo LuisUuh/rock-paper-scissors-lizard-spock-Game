@@ -19,7 +19,7 @@ export default Vue.extend({
         score: Number,
         logoMode: String
     },
-    data() {
+    data(): {logos: object} {
         return {
             logos: { basic: require('@/assets/images/logo.svg'), hard: require('@/assets/images/logo-bonus.svg') }
         }

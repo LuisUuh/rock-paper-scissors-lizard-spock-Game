@@ -8,11 +8,11 @@
   #app {
     border: .1px solid hsl(237, 49%, 15%);
     font-family: 'Barlow Semi Condensed';
-    background: radial-gradient(hsl(214, 47%, 23%), hsl(237, 49%, 15%));
     color:  hsl(229, 25%, 31%);
   }
   body {
     margin: 0;
     padding: 0;
+    background: radial-gradient(hsl(214, 47%, 23%), hsl(237, 49%, 15%));
   }
 </style>

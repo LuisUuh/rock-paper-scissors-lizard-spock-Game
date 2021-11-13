@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <scoreboard :score="score" :logoMode="logo"/>
-    <game :mode="mode" :record="score" @update="setRecord"/>
+    <game :mode="mode" :record="score" @update="setNewRecord"/>
     <button class="btn-home changeMode" @click="changeMode">{{option}}</button>
     <button class="btn-home btn-sm-position" @click="showModal = true">Rules</button>
     <modal v-if="showModal" :showModal="showModal" :mode="mode"  @close="showModal = false" />
@@ -19,17 +19,16 @@ export default Vue.extend({
   created (){
     let r = localStorage.getItem('record')
     if(r !== null){
-      var savedRecord = JSON.parse(r)
-      this.score = savedRecord[0].record
+      this.getRecordSaved(r)
     }
   },
-  data () {
+  data (): {message:string, score: number, mode: string, logo:string, option: string, showModal: boolean} {
     return {
       message: 'Welcome to Your Vue.js App',
       score: 0,
       mode: 'basic',
       logo: 'basic',
-      option: 'Normal',
+      option: '...Lizard, Spock',
       showModal: false
     }
   },
@@ -38,12 +37,12 @@ export default Vue.extend({
       this.mode = this.mode === 'basic' ? 'hard' : 'basic'
       this.logo = this.logo === 'basic' ? 'hard' : 'basic'
       if (this.mode === 'basic') {
-        this.option = 'Normal'
-      } else {
         this.option = '...Lizard, Spock'
+      } else {
+        this.option = 'normal'
       }
     },
-    setRecord (record: number) {
+    setNewRecord (record: number) {
       if(record >= 0) {
         this.score = record
         const saveRecord = [
@@ -52,6 +51,21 @@ export default Vue.extend({
         localStorage.setItem('record', JSON.stringify(saveRecord))
       }
     },
+    getRecordSaved(value: string) {
+      const savedRecord = JSON.parse(value)
+      let toDay = new Date()
+      let daySaved = new Date(savedRecord[0].date)
+      let diff = toDay.getTime() - daySaved.getTime()
+      const day_as_milliseconds = 86400000;
+      let diff_in_days = diff / day_as_milliseconds;
+
+      if (Math.floor(diff_in_days) > 0) {
+        alert('You have not played in a long time, your record has been reset')
+        localStorage.removeItem('record')
+      } else {
+        this.score = savedRecord[0].record
+      }
+    }
     },
   components: {
     scoreboard,
@@ -66,11 +80,6 @@ export default Vue.extend({
   padding: 0;
   min-height: 95vh;
 }
-.changeMode {
-  top: 5%;
-  right: 4%;
-  margin: 1rem;
-}
 .btn-home{
   border: 2px hsl(217, 16%, 45%) solid;
   color: #fff;
@@ -80,14 +89,20 @@ export default Vue.extend({
   position: absolute;
   text-transform: uppercase;
 }
+.changeMode {
+  top: 0;
+  right: 0;
+  margin: 2rem;
+}
 .btn-sm-position{
-  bottom: 5%;
-  right: 5%;
+  bottom: 0;
+  right: 0;
+  margin: 2rem;
 }
 @media (max-width: 768px) {
     .changeMode{
-      top:87.5%;
-      right: 0;
+      top: auto;
+      bottom: 0;
       left: 0;
     }
 }

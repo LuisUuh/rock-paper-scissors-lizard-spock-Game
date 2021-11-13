@@ -1,12 +1,7 @@
 <template>
     <section>
         <article class="game-box">
-            <!-- <div v-if="mode == 'basic' && show_game" class="basic"> -->
-            <div v-if="show_game" class="basic">
-                <figure class="bg-game">
-                    <img v-if="mode == 'basic'" :src="img.triangle" alt="" width="325">
-                    <img v-if="mode == 'hard'" :src="img.pentagon" alt="" width="325">
-                </figure>
+            <div v-if="show_game" :class="['basic ', mode == 'basic' ? 'basic-bg':'hard-bg']">
                 <figure :class="['option-box d-flex paper ', mode =='basic' ? 'paper-basic-position': 'paper-hard-position']" @click="select('paper')">
                     <div>
                         <img :src="options.paper" width="50" alt="img-paper">
@@ -47,15 +42,11 @@ export default Vue.extend({
         mode: String,
         record: Number
     },
-    data(): {show_game: boolean, show_result: boolean, myChoise: string, img: Object, options: Object} {
+    data(): {show_game: boolean, show_result: boolean, myChoise: string, options: Object} {
         return {
             show_game: true,
             show_result: false,
             myChoise: '',
-            img: {
-                pentagon: require('@/assets/images/bg-pentagon.svg'), 
-                triangle: require('@/assets/images/bg-triangle.svg'),
-            },
             options: {
                 lizard: require('@/assets/images/icon-lizard.svg'),
                 paper: require('@/assets/images/icon-paper.svg'),
@@ -89,10 +80,21 @@ export default Vue.extend({
 </script>
 <style>
 .game-box {
-    overflow: hidden;
-    box-sizing: border-box;
-    min-height: 72vh;
     padding-top: 4em;
+    margin-top: 2em;
+}
+.basic {
+    position: relative;
+    width: 30em;
+    height: 18em;
+    margin: auto;
+    margin-bottom: 4em;
+}
+.basic-bg{
+    background: url('../../assets/images/bg-triangle.svg') no-repeat center center;
+}
+.hard-bg{
+    background: url('../../assets/images/bg-pentagon.svg') no-repeat center center;
 }
 .d-flex{
     display: flex;
@@ -118,21 +120,6 @@ export default Vue.extend({
     align-items: center;
     box-shadow:inset 0px 7px 3px #aca8a8;
 }
-.basic {
-    position: relative;
-    width: 50%;
-    height: 300px;
-    margin: auto;
-    margin-bottom: 50px;
-}
-.bg-game {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    right: 30%;
-    margin: auto;
-}
 .paper {
     background: radial-gradient(hsl(230, 89%, 62%), hsl(230, 89%, 65%));
     box-shadow:inset 0px -6px 2px hsl(230, 64%, 43%);        
@@ -155,250 +142,172 @@ export default Vue.extend({
 }
 .paper-basic-position{
     position: absolute;
-    top: -40px;
-    left: 15%;
+    top: -4em;
+    left: 1em;
 }
 .scissors-basic-position{
     position: absolute;
-    top: -40px;
-    right: 22%;
+    top: -4em;
+    right: 1em;
 }
 .rock-basic-position{
     position: absolute;
-    bottom: -30px;
-    left: 36%;
+    bottom: -4em;
+    left: 10.4em;
 }
 .paper-hard-position{
     position: absolute;
     top: 2em;
-    right: 8em;
+    right: -1em;
 }
 .scissors-hard-position{
     position: absolute;
     top: -4em;
-    left: 35%;
+    left: 10.5em;
 }
 .rock-hard-position{
     position: absolute;
     bottom: -5em;
-    right: 11em;
+    right: 4em;
 }
 .lizard-hard-position{
     position: absolute;
     bottom: -5em;
-    left: 20%;
+    left: 4em;
 }
 .spock-hard-position{
     position: absolute;
     top: 2em;
-    left: 5em;
+    left: -1em;
 }
-
-@media screen and (max-width: 1262px) {
-    .bg-game img {
-        width: 100%;
+ 
+@media screen and (max-width: 564px) {
+    .basic {
+        width: 100%
     }
-}
-@media screen and (max-width: 1242px) {
-    .rock-basic-position{
-        left: 13em !important;
-        bottom: -4em !important;
+    .option-box{
+        width: 115px;
+        height: 115px;
+    }
+    .option-box div{
+        width: 85px;
+        height: 85px;
     }
     .paper-basic-position{
-        left: 3em !important;
-        top: -3em !important;
+    top: -3em;
+    left: 4em;
     }
     .scissors-basic-position{
-        right: 6em !important;
-        top: -3em !important;
+        top: -3em;
+        right: 4em;
+    }
+    .rock-basic-position{
+        left: 14em;
+    }
+    .paper-hard-position{
+        top: 3em;
+        right: 4em;
     }
     .scissors-hard-position{
-        left: 12rem;
-        top: -4rem;
+        left: 14em;
+    }
+    .rock-hard-position{
+        bottom: -4em;
+        right: 8em;
     }
     .lizard-hard-position{
-        left: 5em;
+        bottom: -4em;
+        left: 8em;
     }
     .spock-hard-position{
-        left: 2em;
+        top: 3em;
+        left: 4em;
     }
-
 }
-@media screen and (max-width: 1180px) {
+@media screen and (max-width: 414px) {
+    .basic-bg{
+        background-size: calc(100% - 12em) calc(100% - 9em);
+    }
+    .hard-bg{
+        background-size: calc(100% - 12em) calc(100% - 6em);
+    }
+    .paper-basic-position{
+        top: 1em;
+        left: 3em;
+    }
+    .scissors-basic-position{
+        top: 1em;
+        right: 3em;
+    }
     .rock-basic-position{
-        left: 11em !important;
+        left: 8.6em;
+        bottom: 2em;
+    }
+    .paper-hard-position{
+        top: 4em;
+        right: 1em;
     }
     .scissors-hard-position{
-        left: 11rem;
+        top: -2em;
+        left: 8.6em;
+    }
+    .rock-hard-position{
+        bottom: -2em;
+        right: 4em;
     }
     .lizard-hard-position{
+        bottom: -2em;
         left: 4em;
     }
     .spock-hard-position{
+        top: 4em;
         left: 1em;
     }
-    .paper-hard-position{
-        right: 7em;
-    }
 }
-@media screen and (max-width: 1072px) {
-    .scissors-hard-position{
-        left: 10rem !important;
-    }
-    .rock-basic-position{
-        left: 9em !important;
-    }
-    .paper-basic-position{
-        left: 2em !important;
-    }
-    .scissors-basic-position{
-        right: 6em !important;
-    }
-}
-@media screen and (max-width: 985px) {
-    .bg-game {
-        width: 60%;
-        top: 2em;
-        right: 0;
-        left: .1rem;
-    }
-    .scissors-hard-position{
-        top: -3rem;
-    }
-    .rock-hard-position{
-        bottom: -4rem;
-        right: 5em !important;
-    }
-    .paper-hard-position{
-        right: 2em !important;
-    }
-    .lizard-hard-position{
-        bottom: -4rem;
-        left: 4em !important;
-    }
-    .rock-basic-position{
-        left: 11em !important;
-    }
-    .scissors-basic-position{
-        right: 3em !important;
-    }
-}
-@media screen and (max-width: 922px) {
-
-    .scissors-hard-position{
-        top: -4rem;
-        left: 9rem !important;
-    }
-    .rock-hard-position{
-        right: 4em !important;
-    }
-    .paper-hard-position{
-        right: 1em !important;
-    }
-    .lizard-hard-position{
-        left: 3em !important;
-    }
-    .spock-hard-position{
-        left: .5em !important;
-    }
-    .rock-basic-position{
-        left: 10em !important;
-    }
-    .scissors-basic-position{
-        right: 2em !important;
-    }
-}
-@media screen and (max-width: 859px) {
-    .paper-hard-position{
-        left: 18em !important;
-    }
-    .rock-basic-position{
-        left: 9em !important;
-    }
-}
-@media screen and (max-width: 800px) {
-    .bg-game img {
-        width: 100%;
+@media screen and (max-width: 320px) {
+    .game-box {
+        padding-top: 0em;
     }
     .option-box{
         width: 90px;
         height: 90px;
     }
-    .option-box img{
-        width: 60%;
-    }
     .option-box div{
         width: 70px;
         height: 70px;
     }
-    
-    .paper-hard-position{
-        left: 17rem !important;
-        top: 4rem;
+    .basic-bg{
+        background-size: calc(100% - 10em) calc(100% - 10em);
     }
-    .scissors-hard-position{
-        left: 9.5rem !important;
-        top: -1rem;
-    }
-    .lizard-hard-position{
-        left: 5em !important;
-        bottom: 0rem;
-    }
-    .spock-hard-position{
-        left: 3em !important;
-        top: 4em;
-    }
-    .rock-hard-position{
-        right: 4.7em !important;
-        bottom: 0rem;
-    }
-    .rock-basic-position{
-        left: 9.5em !important;
-        bottom: 1em !important;
-    }
-    .scissors-basic-position{
-        top: -1em !important;
-        right: 2rem !important;
+    .hard-bg{
+        background-size: calc(100% - 10em) calc(100% - 10em);
     }
     .paper-basic-position{
-        left: 2rem;
-        top: -1rem !important;
+        top: 2.2em;
     }
-    
-}
-@media screen and (max-width: 728px) {
-
+    .scissors-basic-position{
+        top: 2.2em;
+    }
+    .rock-basic-position{
+        left: 7.2em;
+    }
     .paper-hard-position{
-        left: 16rem !important;
+        top: 5em;
+        right: 2em;
     }
     .scissors-hard-position{
-        left: 9rem !important;
-    }
-    .lizard-hard-position{
-        bottom: 1rem;
-    }
-    .spock-hard-position{
-        left: 2em !important;
+        top: 1em;
+        left: 7.2em;
     }
     .rock-hard-position{
-        right: 4em !important;
-        bottom: 1rem;
-    }
-    .rock-basic-position{
-        left: 8.7em !important;
-    }
-    
-}
-/*  */
-@media screen and (max-width: 675px) {
-    .basic {
-        width: 100%;
-    }
-    .rock-basic-position{
-        left: 9.2em !important;
+        bottom: 1em;
     }
     .lizard-hard-position{
-        bottom: 1rem;
+        bottom: 1em;
+    }
+    .spock-hard-position{
+        top: 5em;
+        left: 2em;
     }
 }
 </style>
